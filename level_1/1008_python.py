@@ -1,0 +1,5 @@
+usrin = input()
+usrinList = usrin.split(' ')
+valA = float(usrinList[0])
+valB = float(usrinList[1])
+print(valA/valB)
