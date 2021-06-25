@@ -1,5 +1,3 @@
-#COMMENT(sj:2021-06-24): This is wrong!!!!!!
-
 import sys
 import math
 
@@ -16,7 +14,7 @@ res = ''
 adder = 0
 for i in range(len(T[1])-1,-1,-1):
     res = str((int(T[0][i])+int(T[1][i])+adder)%10) + res
-    adder = (int(T[0][i])+int(T[1][i]))//10
+    adder = (int(T[0][i])+int(T[1][i])+adder)//10
 
 for i in range(len(upNumber)-1,-1,-1):
     if adder == 0:
