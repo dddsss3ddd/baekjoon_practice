@@ -1,6 +1,5 @@
 import sys
 
-<<<<<<< HEAD
 usrIn =  sys.stdin.readline().rstrip()
 national = int(usrIn)
 count = len(usrIn)
