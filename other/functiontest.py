@@ -17,9 +17,12 @@ def get_square_axis_from_axis(x,y):
     return res
 
 q1 = np.array([[1,2,3],[1,2,3],[1,2,3],[1,2,3]])
-q2 = [2,4,5]
+q2 = np.empty((3,3),dtype=object)
 q3 = [6,4,8,2]
-print(q1)
+print(q2)
 
-a,b = np.where(q1 == 1)
-print(a,b)
+q2[1][1] = [1,2,3]
+
+print(q2)
+
+print(len(q2[1][2]))
