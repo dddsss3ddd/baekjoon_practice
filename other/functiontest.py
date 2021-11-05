@@ -1,28 +1,28 @@
-import numpy as np
 
-arr = np.array([range(i*10+1,i*10+10) for i in range(1,10)])
+import sys
 
-def t_comb(a,b):
-    c = []
-    for i in a:
-        for j in b:
-            c.append([i,j])
-    return c
+arr = [[[] for i in range(1,10)] for j in range(1,10)]
 
-def get_square_axis_from_axis(x,y):
-    axis_x=np.arange(start=3*(x//3),stop=3*(x//3)+3)
-    axis_y=np.arange(start=3*(y//3),stop=3*(y//3)+3)
-    res = np.array(t_comb(axis_x,axis_y))
-    res = np.delete(res,np.where((res[:,0]==x)&(res[:,1]==y)),axis=0)
-    return res
+# sudo = [list(map(int,sys.stdin.readline().rstrip().split(' ')))]
+# for i in range(8):
+#     sudo.append(list(map(int,sys.stdin.readline().rstrip().split(' '))))
 
-q1 = np.array([[1,2,3],[1,2,3],[1,2,3],[1,2,3]])
-q2 = np.empty((3,3),dtype=object)
-q3 = [6,4,8,2]
-print(q2)
+ta = [[1],[1,2,3],[arr],['sss']]
 
-q2[1][1] = [1,2,3]
+sudo = [[1,2,3,4,5,6,7,8,9],
+# [11,12,13,14,15,16,17,18,19],
+[21,22,23,24,25,26,27,28,29],[21,22,23,24,25,26,27,28,29],
+[31,32,33,34,35,36,37,38,39],
+[41,42,43,44,45,46,47,48,49],
+[51,52,53,54,55,56,57,58,59],
+[61,62,63,64,65,66,67,68,69],
+[71,72,73,74,75,76,77,78,79],
+[81,82,83,84,85,86,87,88,89],
+[91,92,93,94,95,96,97,98,99]]
 
-print(q2)
 
-print(len(q2[1][2]))
+t = {1,2,3}
+
+t.remove(1)
+
+print(t)
