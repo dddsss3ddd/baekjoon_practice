@@ -126,3 +126,13 @@ if find_all != 0:
 for row in sudoku:
     print(' '.join(map(str,row)))
 
+#COMMENT(sj:2021-11-05): why is this not working properly?
+#0 0 3 4 5 6 7 8 9
+# 4 5 6 7 8 9 0 0 3
+# 7 8 9 0 0 3 4 5 6
+# 0 0 4 3 6 5 8 9 7
+# 3 6 5 8 9 7 0 0 4
+# 8 9 7 0 0 4 3 6 5
+# 5 3 0 6 4 0 9 7 8
+# 6 4 0 9 7 8 5 3 0
+# 9 7 8 5 3 0 6 4 0
