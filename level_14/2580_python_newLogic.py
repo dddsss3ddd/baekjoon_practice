@@ -1,5 +1,6 @@
 import sys
 
+
 full_num = {i for i in range(1,10)}
 check_list = []
 sudoku = []
@@ -9,44 +10,46 @@ for i in range(9):
         if sudoku[i][j] == 0:
             check_list.append([i,j])
 
-def get_y_set(x,y):
-    return full_num.difference(sudoku[x])
+check_list = check_list[::-1]
 
-def get_x_set(x,y):
-    return full_num.difference((row[y] for row in sudoku))
+def get_nums(arr):
+    return full_num.difference(arr)
 
-def get_sq_set(x,y):
-    return full_num.difference(sum([arr[x*3:x*3+3] for arr in sudoku[y*3:y*3+3]],[]))
+def get_x_nums(x,y):
+    q = get_nums(row[y] for row in sudoku)
+    return q
 
-def get_possible_set(x,y):
-    return get_y_set(x,y).union(get_x_set(x,y)).union(get_sq_set(x,y))
+def get_y_nums(x,y):
+    t= get_nums(sudoku[x])
+    return t
 
-def recursive_sudoku(n):
-    if n == 0:
-        tset = get_possible_set(check_list[n][0],check_list[n][1])
-        if len(tset) == 1:
-            sudoku[check_list[n][0]][check_list[n][1]] = tset.pop()
+def get_sq_nums(x,y):
+    w= get_nums(sum([a[y//3*3:y//3*3+3] for a in sudoku[x//3*3:x//3*3+3]],[]))
+    return w
+
+def find(index):
+    if index == 0:
+        x,y = check_list[0]
+        tSet = get_sq_nums(x,y).intersection(get_x_nums(x,y)).intersection(get_y_nums(x,y))
+        if(len(tSet) != 0):
+            val = tSet.pop()
+            sudoku[x][y] = val
             return True
         else:
             return False
     else:
-        tset = get_possible_set(check_list[n][0],check_list[n][1])
-        for i in tset:
-            sudoku[check_list[n][0]][check_list[n][1]] = i
-            if recursive_sudoku(n-1) is True:
-                return True
+        x,y = check_list[index]
+        cSet = get_sq_nums(x,y).intersection(get_x_nums(x,y)).intersection(get_y_nums(x,y))
+        if len(cSet) != 0:
+            for i in cSet:
+                sudoku[x][y] = i
+                if(find(index-1)):
+                    return True
+        sudoku[x][y] = 0
         return False
+
+find(len(check_list)-1)
 
 for row in sudoku:
     print(' '.join(map(str,row)))
 
-
-# 0 0 3 4 5 6 7 8 9
-# 4 5 6 7 8 9 0 0 3
-# 7 8 9 0 0 3 4 5 6
-# 0 0 4 3 6 5 8 9 7
-# 3 6 5 8 9 7 0 0 4
-# 8 9 7 0 0 4 3 6 5
-# 5 3 0 6 4 0 9 7 8
-# 6 4 0 9 7 8 5 3 0
-# 9 7 8 5 3 0 6 4 0
