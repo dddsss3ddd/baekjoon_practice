@@ -1,5 +1,5 @@
+#what ever the time and resources it takes, success
 import sys
-
 
 full_num = {i for i in range(1,10)}
 check_list = []
@@ -30,7 +30,7 @@ def get_sq_nums(x,y):
 def find(index):
     if index == 0:
         x,y = check_list[0]
-        tSet = get_sq_nums(x,y).intersection(get_x_nums(x,y)).intersection(get_y_nums(x,y))
+        tSet = full_num.difference((set(row[y] for row in sudoku).union(sudoku[x]).union(sum([a[y//3*3:y//3*3+3] for a in sudoku[x//3*3:x//3*3+3]],[]))))
         if(len(tSet) != 0):
             val = tSet.pop()
             sudoku[x][y] = val
@@ -39,7 +39,7 @@ def find(index):
             return False
     else:
         x,y = check_list[index]
-        cSet = get_sq_nums(x,y).intersection(get_x_nums(x,y)).intersection(get_y_nums(x,y))
+        cSet = full_num.difference((set(row[y] for row in sudoku).union(sudoku[x]).union(sum([a[y//3*3:y//3*3+3] for a in sudoku[x//3*3:x//3*3+3]],[]))))
         if len(cSet) != 0:
             for i in cSet:
                 sudoku[x][y] = i
