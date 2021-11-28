@@ -1,28 +1,71 @@
-
 import sys
 
-arr = [[[] for i in range(1,10)] for j in range(1,10)]
+with open("E:/temp/20211116/tt", "w") as f:
+    
+    full_num = {i for i in range(1,10)}
+    check_list = []
+    sudoku = []
+    for i in range(9):
+        sudoku.append(list(map(int,sys.stdin.readline().rstrip().split(' '))))
+        for j in range(9):
+            if sudoku[i][j] == 0:
+                check_list.append([i,j])
 
-# sudo = [list(map(int,sys.stdin.readline().rstrip().split(' ')))]
-# for i in range(8):
-#     sudo.append(list(map(int,sys.stdin.readline().rstrip().split(' '))))
+    def get_nums(arr):
+        return full_num.difference(arr)
 
-ta = [[1],[1,2,3],[arr],['sss']]
+    def get_x_nums(x,y):
+        # print('getx=',[row[y] for row in sudoku])
+        q = get_nums(row[y] for row in sudoku)
+        # print('xres=',q)
+        return q
 
-sudo = [[1,2,3,4,5,6,7,8,9],
-# [11,12,13,14,15,16,17,18,19],
-[21,22,23,24,25,26,27,28,29],[21,22,23,24,25,26,27,28,29],
-[31,32,33,34,35,36,37,38,39],
-[41,42,43,44,45,46,47,48,49],
-[51,52,53,54,55,56,57,58,59],
-[61,62,63,64,65,66,67,68,69],
-[71,72,73,74,75,76,77,78,79],
-[81,82,83,84,85,86,87,88,89],
-[91,92,93,94,95,96,97,98,99]]
+    def get_y_nums(x,y):
+        # print('gety=',sudoku[x])
+        t= get_nums(sudoku[x])
+        # print('yres=',t)
+        return t
 
+    def get_sq_nums(x,y):
+        # print('getq=',sum([a[y//3*3:y//3*3+3] for a in sudoku[x//3*3:x//3*3+3]],[]))
+        w= get_nums(sum([a[y//3*3:y//3*3+3] for a in sudoku[x//3*3:x//3*3+3]],[]))
+        # print('qres=',w)
+        return w
 
-t = {1,2,3}
+    def find(index):
+        if index == 0:
+            x,y = check_list[0]
+            tSet = full_num - set(row[y] for row in sudoku) - set(sudoku[x]) - set(sum([a[y//3*3:y//3*3+3] for a in sudoku[x//3*3:x//3*3+3]],[]))
+            print('index=',index,', pos = ',x,y,', set=',tSet,file=f)
+            if(len(tSet) != 0):
+                val = tSet.pop()
+                print('x,y=',x,y,', update=',val,file=f)
+                sudoku[x][y] = val
+                for row in sudoku:
+                        print(' '.join(map(str,row)),file=f)
+                return True
+            else:
+                return False
+        else:
+            x,y = check_list[index]
+            cSet = get_sq_nums(x,y).intersection(get_x_nums(x,y)).intersection(get_y_nums(x,y))
+            print('index=',index,', pos = ',x,y,', zero=',sudoku[x][y//3*3:y//3*3+3].count(0),', set=',cSet,file=f)
+            if len(cSet) !=0 :
+                for i in cSet:
+                    sudoku[x][y] = i
+                    print('x,y=',x,y,', update=',i,file=f)
+                    for row in sudoku:
+                        print(' '.join(map(str,row)),file=f)
+                    if(find(index-1)):
+                        return True
+            sudoku[x][y] = 0
+            return False
 
-t.remove(1)
+    find(len(check_list)-1)
 
-print(t)
+    print('===========================================')
+
+    for row in sudoku:
+        print(' '.join(map(str,row)))
+
+    f.close()
