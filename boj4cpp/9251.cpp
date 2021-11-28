@@ -22,5 +22,29 @@ CAPCAK
 using namespace std;
 
 int main(){
+    string a ;
+    string b ;
+    int mp[2][1001] = {0};
 
+    int* post = mp[1];
+    int* pre = mp[0];
+    int* temp = nullptr;
+    cin >> a >>b;
+    int la,lb;
+    la = a.length();
+    lb = b.length();
+
+    for(int i = 1; i<=lb; ++i){
+        for(int j=1; j<=la; ++j){
+            if(b[i-1]==a[j-1]){
+                post[j] = pre[j-1]+1;
+            }else{
+                post[j] = max(post[j-1],pre[j]);
+            }
+        }
+        temp = pre;
+        pre = post;
+        post = temp;
+    }
+    cout<<pre[la]<<endl;
 }
